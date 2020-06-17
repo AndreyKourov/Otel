@@ -61,7 +61,7 @@
     <div class="col-sm-12 col-md-6 col-lg-6 right">
         <!-- Section B - cities -->
         <?php
-
+        
         $res = mysqli_query($link, 'SELECT * FROM countries');
                 
         echo '<form action="index.php?page=4" method="post" class="input-group" id="formcity">';
@@ -112,7 +112,6 @@
 
         // обработчик для удаления страны
         if(isset($_POST['delcity'])) {
-            var_dump($_POST['delcity']);
             // перебираем массив $_POST
             foreach($_POST as $k => $v) { 
                 if(substr($k, 0, 2) === 'cb') {
@@ -225,31 +224,8 @@
         echo '<input type="submit" name="addimage" value="add" class="btn btn-sm btn-info m-2">';
         echo '</form>';
 
-                   
-            echo    '<script>';
-            echo    '$(function() { ';
-                // Multiple images preview in browser
-                echo    'var imagesPreview = function(input, placeToInsertImagePreview) { ';
-                    echo 'if (input.files) { ';
-                        echo 'var filesAmount = input.files.length; ';
-
-                        echo 'for (i = 0; i < filesAmount; i++) { ';
-                            echo 'var reader = new FileReader(); ';
-
-                            echo 'reader.onload = function(event) { ';
-                                echo "$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview); }";
-                            
-                            echo "reader.readAsDataURL(input.files[i]);";
-                        echo '}';
-                    echo '}';
-                echo '};';
-
-                echo "$('#gallery-photo-add').on('change', function() { ";
-                    echo    "imagesPreview(this, 'div.gallery');";
-                    echo '});';
-                echo '});';
-              
-                echo '</script>';
+        
+                 echo '<div class="gallery"></div>';
         
         
         // обработчик добавления изображения
@@ -267,7 +243,36 @@
             }
         }
 
-        ?> 
-        
+        ?>  
+
+      
+              <script>
+                $(function() { 
+                // Multiple images preview in browser
+                    var imagesPreview = function(input, placeToInsertImagePreview) { 
+                     if (input.files) { 
+                         var filesAmount = input.files.length; 
+
+                         for (i = 0; i < filesAmount; i++) { 
+                             var reader = new FileReader(); 
+
+                             reader.onload = function(event) { 
+                                 $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                                 }
+                            
+                             reader.readAsDataURL(input.files[i]);
+                         }
+                     }
+                 };
+
+                 $('#gallery-photo-add').on('change', function() { 
+                        imagesPreview(this, 'div.gallery');
+                     });
+                 });
+              
+                 </script>
+
+                 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </div>
 </div>

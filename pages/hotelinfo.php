@@ -36,30 +36,31 @@
         $result = mysqli_query($link, $sel1);
         $act = mysqli_fetch_array($result, MYSQLI_NUM);
                 
-        echo '<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">';
+        echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">';
             echo '<div class="carousel-inner">';
                 echo '<div class="carousel-item active">';
-                    echo '<img src="../'.$act.'" class="d-block-center w-100" alt="...">';
-                    var_dump($act);
+                    echo '<img src="../' . $act[0] . '" class="d-block-center w-100" alt="...">';
                 echo '</div>';
+
+                while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
                 echo '<div class="carousel-item">';
-                    while($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
                     echo "<img src='../$row[0]' class='d-block w-100' alt='hotel pic'>";
-                    }
                 echo '</div>';
+                }
+
             echo '</div>';
-            echo '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
+                echo '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
                 echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
                 echo '<span class="sr-only">Previous</span>';
-            echo '</a>';
-            echo '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
+                echo '</a>';
+                echo '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
                 echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
                 echo '<span class="sr-only">Next</span>';
-            echo '</a>';
+                echo '</a>';
         echo '</div>';
 
         echo '</section>';
-        mysqli_free_result($result);
+    mysqli_free_result($result);
 
 
 
@@ -86,7 +87,7 @@
     
     ?>
     
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
