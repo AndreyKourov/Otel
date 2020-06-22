@@ -16,7 +16,7 @@
 
 
         // вывод стран в таблицу
-        echo '<table class="table table-striped">';
+        echo '<table class="table table-striped mt-3 layer">';
         while($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row[0].'</td>'; // id страны
@@ -25,8 +25,6 @@
             echo '</tr>';
         }
         echo '</table>';
-        
-        
         
         echo "</form>";
         
@@ -58,7 +56,7 @@
         
         ?>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-6 right">
+    <div class="col-sm-12 col-md-6 col-lg-6 right mt-5">
         <!-- Section B - cities -->
         <?php
         
@@ -77,14 +75,14 @@
         echo '<input type="text" name="city" placeholder="City">';
         echo '<input type="submit" name="addcity" value="add" class="btn btn-sm btn-info">';
         echo '<input type="submit" name="delcity" value="del" class="btn btn-sm btn-warning">';
-        echo '</form>';
+        
 
 
         // выбираем все данные из таблицы стран    
         
         $res1 = mysqli_query($link, 'SELECT * FROM cities');
         
-        echo '<table class="table table-striped">';
+        echo '<table class="table table-striped mt-3">';
         while($row1 = mysqli_fetch_array($res1, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row1[0].'</td>'; // id страны
@@ -94,6 +92,8 @@
         }
         echo '</table>';      
         
+        echo '</form>';
+
         // обработчик добавления города
         if(isset($_POST['addcity'])) {
             $city = trim(htmlspecialchars($_POST['city']));
@@ -151,6 +151,24 @@
         echo '<br><textarea name="info" placeholder="Description hotel"></textarea>';
         echo '<input type="submit" name="addhotel" value="add" class="btn btn-sm btn-info">';
         echo '<input type="submit" name="delhotel" value="del" class="btn btn-sm btn-warning">';
+
+        //таблица отеля
+        $sel1 = 'SELECT ho.id, ho.hotel, ho.stars, ho.cost, ho.cityid, ci.id, ci.city FROM hotels ho, cities ci WHERE ho.cityid=ci.id';
+        $res1 = mysqli_query($link, $sel1);
+
+        echo '<table class="table table-striped mt-3">';
+        while($row = mysqli_fetch_array($res1, MYSQLI_NUM)) {
+            echo '<tr>';
+                echo '<td>'.$row[0].'</td>'; // id страны
+                echo '<td>'.$row[1].'</td>'; // название страны
+                echo '<td>'.$row[2].'</td>';
+                echo '<td>'.$row[3].'</td>';
+                echo '<td>'.$row[6].'</td>';
+                echo '<td><input type="checkbox" name="cb'.$row[0].'"></td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+        
         echo '</form>';
         
         
@@ -174,22 +192,7 @@
             echo '<script>window.location=document.URL</script>';
         }
 
-        //таблица отеля
-        $sel1 = 'SELECT ho.id, ho.hotel, ho.stars, ho.cost, ho.cityid, ci.id, ci.city FROM hotels ho, cities ci WHERE ho.cityid=ci.id';
-        $res1 = mysqli_query($link, $sel1);
-
-        echo '<table class="table table-striped">';
-        while($row = mysqli_fetch_array($res1, MYSQLI_NUM)) {
-            echo '<tr>';
-                echo '<td>'.$row[0].'</td>'; // id страны
-                echo '<td>'.$row[1].'</td>'; // название страны
-                echo '<td>'.$row[2].'</td>';
-                echo '<td>'.$row[3].'</td>';
-                echo '<td>'.$row[6].'</td>';
-                echo '<td><input type="checkbox" name="cb'.$row[0].'"></td>';
-            echo '</tr>';
-        }
-        echo '</table>';
+        
 
         //удаление отеля
         if(isset($_POST['delhotel'])) {
@@ -224,8 +227,7 @@
         echo '<input type="submit" name="addimage" value="add" class="btn btn-sm btn-info m-2">';
         echo '</form>';
 
-        
-                 echo '<div class="gallery"></div>';
+         echo '<div class="gallery"></div>';
         
         
         // обработчик добавления изображения
