@@ -6,17 +6,27 @@
         $sel = 'SELECT * FROM countries ORDER BY(id)'; // запрос на получ. всех данных
         $res = mysqli_query($link, $sel);
         // var_dump($res);
-        echo '<form action="index.php?page=4" method="post" class="input-group" id="formcountry">';
-        
+        echo '<form action="index.php?page=4" method="post"  id="formcountry">';
+        //class="input-group"
         // добавление стран в таблицу countries
+        //echo '<div class="form-group">';
         echo '<input type="text" name="country" placeholder="country">';
-        echo '<input type="submit" name="addcountry" value="add" class="btn btn-sm btn-info">';
+        
+        echo '<input type="submit" name="addcountry" value="add" class="btn btn-sm btn-info btn-circle mx-3">';
+        //d-block ml-auto 
         // кнопка удаления страны
-        echo '<input type="submit" name="delcountry" value="del" class="btn btn-sm btn-warning">';
+        echo '<input type="submit" name="delcountry" value="del" class="btn btn-sm btn-warning btn-circle mx-3">';
+        //echo '</div>';
 
-
+        //echo '<div class="form-group">';
         // вывод стран в таблицу
-        echo '<table class="table table-striped mt-3 layer">';
+        echo '<button class="btn btn-info" type="button" data-toggle="collapse"
+            data-target="#collcountry" aria-expanded="false" aria-controls="collcountry">
+                Country table</button>';
+        //echo '</div>';        
+        echo '<div class="collapse" id="collcountry">';
+        //echo '<div class="card card-body">';        
+        echo '<table class="table table-striped mt-3">';
         while($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row[0].'</td>'; // id страны
@@ -25,7 +35,9 @@
             echo '</tr>';
         }
         echo '</table>';
-        
+        echo '</div>';
+        //echo '</div>';
+
         echo "</form>";
         
         mysqli_free_result($res); // освобождает память, занятую запросом
@@ -62,7 +74,7 @@
         
         $res = mysqli_query($link, 'SELECT * FROM countries');
                 
-        echo '<form action="index.php?page=4" method="post" class="input-group" id="formcity">';
+        echo '<form action="index.php?page=4" method="post" id="formcity">';
 
         // выпадающий список существующих стран
         echo '<select name="countryname">';
@@ -72,16 +84,21 @@
         }
         echo '</select>';
 
-        echo '<input type="text" name="city" placeholder="City">';
-        echo '<input type="submit" name="addcity" value="add" class="btn btn-sm btn-info">';
-        echo '<input type="submit" name="delcity" value="del" class="btn btn-sm btn-warning">';
+        echo '<input type="text" name="city" placeholder="City" class="mx-3">';
+        echo '<input type="submit" name="addcity" value="add" class="btn btn-sm btn-info btn-circle mx-3">';
+        echo '<input type="submit" name="delcity" value="del" class="btn btn-sm btn-warning btn-circle mx-3">';
         
 
 
         // выбираем все данные из таблицы стран    
         
         $res1 = mysqli_query($link, 'SELECT * FROM cities');
-        
+        echo '<button class="btn btn-info" type="button" data-toggle="collapse"
+            data-target="#collcity" aria-expanded="false" aria-controls="collcity">
+                City table</button>';
+        //echo '</div>';
+        echo '<div class="collapse" id="collcity">';
+        //echo '<div class="card card-body">';  
         echo '<table class="table table-striped mt-3">';
         while($row1 = mysqli_fetch_array($res1, MYSQLI_NUM)) {
             echo '<tr>';
@@ -90,7 +107,9 @@
                 echo '<td><input type="checkbox" name="cb'.$row1[0].'"></td>';
             echo '</tr>';
         }
-        echo '</table>';      
+        echo '</table>';
+        echo '</div>';
+        //echo '</div>';      
         
         echo '</form>';
 
@@ -130,8 +149,8 @@
     <div class="col-sm-12 col-md-6 col-lg-6 left">
         <!-- Section C - hotels -->
         <?php
-        echo '<form action="index.php?page=4" method="post" class="input-group" id="formhotel">';
-        
+        echo '<form action="index.php?page=4" method="post"  id="formhotel">';
+        //class="input-group"
         $sel = 'SELECT ci.id, ci.city, co.country, co.id FROM countries co, cities ci WHERE ci.countryid=co.id'; // через WHERE реализуем связь 1к1, т.е. каждый город будет соответствовать только одной стране.
         $res = mysqli_query($link, $sel); // ci.id[0], ci.city[1], co.country[2], co.id[3]
         
@@ -144,18 +163,25 @@
         }
         echo '</select>';
         
-        echo '<input type="text" name="hotel" placeholder="hotel">';
-        echo '<label for="stars">STARS:</label>';
-        echo '<input type="number" id="stars" name="stars" min="1" max="5">';
+        echo '<input type="text" name="hotel" placeholder="hotel" class="mx-3">';
+        echo '<br>';
+        echo '<label for="stars" class="mt-2">STARS:</label>';
+        echo '<input type="number" id="stars" name="stars" min="1" max="5" class="mx-3">';
         echo '<input type="text" name="cost" placeholder="cost">';
-        echo '<br><textarea name="info" placeholder="Description hotel"></textarea>';
-        echo '<input type="submit" name="addhotel" value="add" class="btn btn-sm btn-info">';
-        echo '<input type="submit" name="delhotel" value="del" class="btn btn-sm btn-warning">';
+        echo '<br><textarea name="info" placeholder="Description hotel" class="mt-1"></textarea>';
+        echo '<br>';
+        echo '<input type="submit" name="addhotel" value="add" class="btn btn-sm btn-info btn-circle mt-1">';
+        echo '<input type="submit" name="delhotel" value="del" class="btn btn-sm btn-warning btn-circle mt-1 mx-3">';
 
         //таблица отеля
         $sel1 = 'SELECT ho.id, ho.hotel, ho.stars, ho.cost, ho.cityid, ci.id, ci.city FROM hotels ho, cities ci WHERE ho.cityid=ci.id';
         $res1 = mysqli_query($link, $sel1);
 
+        echo '<button class="btn btn-info" type="button" data-toggle="collapse"
+            data-target="#collhotel" aria-expanded="false" aria-controls="collhotel">
+                Hotel table</button>';
+
+        echo '<div class="collapse" id="collhotel">';
         echo '<table class="table table-striped mt-3">';
         while($row = mysqli_fetch_array($res1, MYSQLI_NUM)) {
             echo '<tr>';
@@ -168,7 +194,8 @@
             echo '</tr>';
         }
         echo '</table>';
-        
+        echo '</div>';
+
         echo '</form>';
         
         
@@ -224,7 +251,7 @@
         mysqli_free_result($res);
         
         echo '<input type="file" name="file[]" multiple accept="image/*" id="gallery-photo-add" class="m-2">';
-        echo '<input type="submit" name="addimage" value="add" class="btn btn-sm btn-info m-2">';
+        echo '<input type="submit" name="addimage" value="add" class="btn btn-sm btn-info btn-circle my-2">';
         echo '</form>';
 
          echo '<div class="gallery"></div>';
@@ -259,7 +286,7 @@
                              var reader = new FileReader(); 
 
                              reader.onload = function(event) { 
-                                 $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                                 $($.parseHTML('<img style="height: 100px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                                  }
                             
                              reader.readAsDataURL(input.files[i]);
@@ -274,7 +301,5 @@
               
                  </script>
 
-                 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </div>
 </div>
