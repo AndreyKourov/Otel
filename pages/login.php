@@ -26,9 +26,9 @@ if(isset($_SESSION['ruser'])) {
         echo '<form action="index.php';
         if(isset($_GET['page'])) echo '?page='.$_GET['page'];
         echo '" method="post" class="input-group">';
-        echo '<input type="text" name="login" placeholder="login">';
-        echo '<input type="password" name="pass" placeholder="password">';
-        echo '<input type="submit" name="press" value="Login" class="btn btn-primary btn-sm">';
+        echo '<input type="text" name="login" placeholder="login" class="my-3 mx-1">';
+        echo '<input type="password" name="pass" placeholder="password" class="my-3 mx-1">';
+        echo '<input type="submit" name="press" value="Login" class="btn btn-primary btn-sm my-3 mx-1">';
         echo '</form>';
     }
 }

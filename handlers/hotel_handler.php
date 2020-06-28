@@ -26,7 +26,6 @@ if(isset($_POST['addcomment'])) {
 }
 
 
-
 /*
 $sel = 'SELECT * FROM hotels WHERE hotel='.$_GET['hoid'];
 $res = mysqli_query($link, $sel);
@@ -35,3 +34,5 @@ while($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
 }
 mysqli_free_result($res);
 */
+
+?>
