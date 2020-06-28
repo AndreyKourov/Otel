@@ -26,7 +26,7 @@
         //echo '</div>';        
         echo '<div class="collapse" id="collcountry">';
         //echo '<div class="card card-body">';        
-        echo '<table class="table table-striped mt-3">';
+        echo '<table class="table table-striped mt-3 overflow-auto">';
         while($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row[0].'</td>'; // id страны
@@ -99,7 +99,7 @@
         //echo '</div>';
         echo '<div class="collapse" id="collcity">';
         //echo '<div class="card card-body">';  
-        echo '<table class="table table-striped mt-3">';
+        echo '<table class="table table-striped mt-3 overflow-auto">';
         while($row1 = mysqli_fetch_array($res1, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row1[0].'</td>'; // id страны

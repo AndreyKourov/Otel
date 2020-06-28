@@ -63,6 +63,21 @@ discount int,
 avatar mediumblob
 )default charset="utf8"';
 
+$ct7 = 'CREATE TABLE comments(
+    id int not null auto_increment primary key,
+    comment varchar(2048),
+    hotelid int,
+    foreign key(hotelid) references hotels(id) on delete cascade
+    )default charset="utf8"';
+
+
+/*
+mysqli_query($link, $ct7);
+if(mysqli_errno($link)) {
+    echo 'Error code 7 ' .mysqli_errno($link).'<br>';
+    exit;
+}
+
 
 //создаем таблицы описанные выше
 mysqli_query($link, $ct1);
@@ -100,7 +115,7 @@ if(mysqli_errno($link)) {
     echo 'Error code 6 ' .mysqli_errno($link).'<br>';
     exit;
 }
-
+*/
 
 
 
