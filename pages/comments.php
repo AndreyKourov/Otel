@@ -3,6 +3,19 @@
 <?php
 $link = connect();
 
+
+if(isset($_SESSION['ruser']) || isset($_SESSION['radmin'])) {
+    if(isset($_SESSION['ruser'])) { $user = $_SESSION['ruser']; }
+    if(isset($_SESSION['radmin'])) { $user = $_SESSION['radmin']; }
+    $user = strval($user);
+    $resuserid = mysqli_query($link, 'SELECT id FROM `users` WHERE `login`="'.$user.'"');
+    $rowuserid = mysqli_fetch_array($resuserid, MYSQLI_NUM);
+    $userid = (int)$rowuserid[0];
+    mysqli_free_result($resuserid);
+} else { 
+    $userid = 0;
+}
+
 // выаод городов и отелей через AJAX
 echo '<div class="form-inline">';
 // событие onchange происходит при выботе пункта в селекте
@@ -18,7 +31,7 @@ echo '</select>';
 //select для выбора города
 echo '<select name="cityid" id="cityid" onchange="showHotels(this.value)"></select>';
 
-echo '<select name="hotels" id="hotels" onchange="Hotels(this.value)"></select>';
+echo '<select name="hotels" id="hotels" onchange="Hotels(this.value, '.$userid.')"></select>';
 
 echo '</div>';
 
@@ -56,10 +69,11 @@ echo '<div id="comhotels"></div>';
         }
     }
     
-    function Hotels(hotels) {
+    function Hotels(hotels, userid) {
         const ao = new XMLHttpRequest();
-        ao.open('GET', 'handlers/hotel_handler.php?hoid='+hotels, true );
-        ao.send(null);
+        ao.open('POST', 'handlers/hotel_handler.php', true );
+        ao.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        ao.send('hoid='+ hotels +'&'+ 'usid' + userid);
         ao.onreadystatechange = function() {
             if(ao.readyState == 4 && ao.status == 200) {
                 document.getElementById('comhotels').innerHTML = ao.responseText;
