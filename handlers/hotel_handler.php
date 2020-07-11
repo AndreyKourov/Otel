@@ -14,9 +14,15 @@ echo '<input type="submit" name="addcomment" value="add" class="btn btn-sm btn-p
 echo '</form>';
 
 if(isset($_POST['addcomment'])) {
-    $hotelid = $_POST['hoid'];
+    //$hotelid = $_POST['hoid'];
     //$comment = trim(htmlspecialchars($_POST['comment']));
     //if($comment == "") exit;
+    $selhotel = 'SELECT hotel FROM hotels WHERE id='.$_POST['hoid'];
+    $reshotel = mysqli_query($link, $selhotel);
+    $rowhotel = mysqli_fetch_array($reshotel, MYSQLI_NUM);
+    $hotelid = $rowhotel[0];
+    mysqli_free_result($reshotel); 
+
     $comment = trim($_POST['comment']);
     $ins = "INSERT INTO comments(comment, hotelid) VALUES('$comment', '$hotelid')";
     mysqli_query($link, $ins);
