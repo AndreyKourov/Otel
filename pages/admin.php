@@ -24,14 +24,20 @@
             data-target="#collcountry" aria-expanded="false" aria-controls="collcountry">
                 Country table</button>';
         //echo '</div>';        
-        echo '<div class="collapse" id="collcountry">';
+    echo '<div class="collapse wndw" id="collcountry">';
         //echo '<div class="card card-body">';        
-        echo '<table class="table table-striped mt-3 overflow-auto">';
+    echo '<table class="table table-sm table-striped mt-3 overflow-auto">';
+        //echo "<br><div class='collapse wndw my-3'><table class='table table-sm table-striped'>";
         while($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row[0].'</td>'; // id страны
                 echo '<td>'.$row[1].'</td>'; // название страны
                 echo '<td><input type="checkbox" name="cb'.$row[0].'"></td>';
+                echo "<td><form action='index.php?page=4' method='post'>
+                        <input type='hidden' name='idco' value='$row[0]'>
+                        <button type='submit' name='delitem'><i class='fa fa-trash-o' aria-hidden='true'></i></button>
+                    </form>
+                </td>";
             echo '</tr>';
         }
         echo '</table>';
@@ -41,6 +47,13 @@
         echo "</form>";
         
         mysqli_free_result($res); // освобождает память, занятую запросом
+
+        if(isset($_POST['delitem'])) {
+            $idco = $_POST['idco'];
+            $del = 'DELETE FROM countries WHERE id = '.$idco;
+            mysqli_query($link, $del);
+            echo '<script>window.location = document.URL</script>';
+        }
 
         // обработчик для добавления страны
         if(isset($_POST['addcountry'])) {
@@ -97,14 +110,20 @@
             data-target="#collcity" aria-expanded="false" aria-controls="collcity">
                 City table</button>';
         //echo '</div>';
-        echo '<div class="collapse" id="collcity">';
+        echo '<div class="collapse wndw" id="collcity">';
         //echo '<div class="card card-body">';  
-        echo '<table class="table table-striped mt-3 overflow-auto">';
+        echo '<table class="table table-sm table-striped mt-3 overflow-auto">';
+        //echo "<br><div class='wndw my-3'><table class='table table-sm table-striped'>";
         while($row1 = mysqli_fetch_array($res1, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row1[0].'</td>'; // id страны
                 echo '<td>'.$row1[1].'</td>'; // название страны
                 echo '<td><input type="checkbox" name="cb'.$row1[0].'"></td>';
+                echo "<td><form action='index.php?page=4' method='post'>
+                        <input type='hidden' name='idco' value='$row[0]'>
+                        <button type='submit' name='delitem'><i class='fa fa-trash-o' aria-hidden='true'></i></button>
+                    </form>
+                </td>";
             echo '</tr>';
         }
         echo '</table>';
@@ -112,6 +131,13 @@
         //echo '</div>';      
         
         echo '</form>';
+
+        if(isset($_POST['delitem'])) {
+            $idco = $_POST['idco'];
+            $del = 'DELETE FROM cities WHERE id = '.$idco;
+            mysqli_query($link, $del);
+            echo '<script>window.location = document.URL</script>';
+        }
 
         // обработчик добавления города
         if(isset($_POST['addcity'])) {
@@ -181,8 +207,9 @@
             data-target="#collhotel" aria-expanded="false" aria-controls="collhotel">
                 Hotel table</button>';
 
-        echo '<div class="collapse" id="collhotel">';
-        echo '<table class="table table-striped mt-3">';
+        echo '<div class="collapse wndw" id="collhotel">';
+        echo '<table class="table table-sm table-striped mt-3">';
+        //echo "<br><div class='wndw my-3'><table class='table table-sm table-striped'>";
         while($row = mysqli_fetch_array($res1, MYSQLI_NUM)) {
             echo '<tr>';
                 echo '<td>'.$row[0].'</td>'; // id страны
@@ -191,6 +218,11 @@
                 echo '<td>'.$row[3].'</td>';
                 echo '<td>'.$row[6].'</td>';
                 echo '<td><input type="checkbox" name="cb'.$row[0].'"></td>';
+                echo "<td><form action='index.php?page=4' method='post'>
+                        <input type='hidden' name='idco' value='$row[0]'>
+                        <button type='submit' name='delitem'><i class='fa fa-trash-o' aria-hidden='true'></i></button>
+                    </form>
+                </td>";
             echo '</tr>';
         }
         echo '</table>';
@@ -199,6 +231,13 @@
         echo '</form>';
         
         
+        if(isset($_POST['delitem'])) {
+            $idco = $_POST['idco'];
+            $del = 'DELETE FROM hotels WHERE id = '.$idco;
+            mysqli_query($link, $del);
+            echo '<script>window.location = document.URL</script>';
+        }
+
         // добавление отеля
         if(isset($_POST['addhotel'])) {
             $hotel = trim(htmlspecialchars($_POST['hotel']));
@@ -240,7 +279,7 @@
     <div class="col-sm-12 col-md-6 col-lg-6 right">
         <!-- Section D - image -->
         <?php
-        echo '<form action="index.php?page=4" method="post" enctype="multipart/form-data" class="input-group">';
+        echo '<form action="index.php?page=4" method="post" enctype="multipart/form-data">';
         $sel = 'SELECT ho.id, co.country, ci.city, ho.hotel FROM countries co, cities ci, hotels ho WHERE ho.countryid=co.id AND ho.cityid=ci.id';
         $res = mysqli_query($link, $sel);
         echo '<select name="hotelid">';
@@ -249,8 +288,8 @@
         }
         echo '</select>';
         mysqli_free_result($res);
-        
-        echo '<input type="file" name="file[]" multiple accept="image/*" id="gallery-photo-add" class="m-2">';
+        echo '<br>';
+        echo '<input type="file" name="file[]" multiple accept="image/*" id="gallery-photo-add">';
         echo '<input type="submit" name="addimage" value="add" class="btn btn-sm btn-info btn-circle my-2">';
         echo '</form>';
 
@@ -300,6 +339,6 @@
                  });
               
                  </script>
-
     </div>
 </div>
+

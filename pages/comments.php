@@ -16,6 +16,7 @@ if(isset($_SESSION['ruser']) || isset($_SESSION['radmin'])) {
     $userid = 0;
 }
 
+
 // выаод городов и отелей через AJAX
 echo '<div class="form-inline">';
 // событие onchange происходит при выботе пункта в селекте

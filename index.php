@@ -35,7 +35,7 @@ include_once("pages/functions.php");
                    if($page == 1) {include_once('pages/tours.php');}
                    if($page == 2) {include_once('pages/comments.php');}
                    if($page == 3) {include_once('pages/registration.php');}
-                   if($page == 4) {include_once('pages/admin.php');}
+                   if($page == 4 && isset($_SESSION['radmin'])) {include_once('pages/admin.php');}
                    if($page == 5 && isset($_SESSION['radmin'])) {include_once('pages/private.php');}
                }
                ?>               
@@ -44,7 +44,7 @@ include_once("pages/functions.php");
        <footer class="row">Step academy &copy; 2020</footer>
    </div>
     
-    
+    <script src="https://use.fontawesome.com/5265fdf927.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

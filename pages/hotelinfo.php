@@ -28,6 +28,15 @@
         echo "<h1 class='text-uppercase'>$ho_name</h1>";
         echo '<p class="lead">Watch our pictures</p>';
         echo '<p class="lead">Info: '.$ho_info.'</p>';
+
+        echo "<h3>Отзывы</h3>";
+        $sel = 'SELECT * FROM comments WHERE hotelid='.$ho_id;
+        $res = mysqli_query($link, $sel);
+        while($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
+            
+            echo "<div>$row[1]</div>";
+        }
+
         for($i=0; $i<$ho_stars; $i++) {
             echo '<img src="../images/star.png" alt="star" class="container_star">';
         }
